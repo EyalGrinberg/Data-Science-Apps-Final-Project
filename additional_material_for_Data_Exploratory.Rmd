@@ -1,0 +1,118 @@
+---
+title: "additional material for Data Exploratory"
+author: "Eyal Grinberg & Yam Rozen"
+date: "2023-07-19"
+output: html_document
+---
+
+packages and libraries
+```{r}
+#install.packages(c("DataExplorer","SmartEDA"))
+```
+```{r}
+library(DataExplorer)
+library(SmartEDA)
+```
+```{r}
+library(tidyverse)
+data_food_train <- read_csv("C:/Users/user/OneDrive - mail.tau.ac.il/Desktop/R/data science apps/final_project/Final_Project-EyalGrinberg/data/food_train.csv")
+```
+
+```{r}
+ExpReport(data_food_train, Target = "category", op_file = "Report.html", op_dir = getwd())
+```
+
+```{r}
+install.packages("dataMaid")
+```
+```{r}
+library(dataMaid)
+```
+```{r}
+makeDataReport(data = data_food_train, output = "html", replace = TRUE)
+```
+```{r}
+create_report(data = data_food_train)
+```
+
+```{r}
+data_nutrients <- read_csv("C:/Users/user/OneDrive - mail.tau.ac.il/Desktop/R/data science apps/final_project/Final_Project-EyalGrinberg/data/nutrients.csv")
+data_food_nutrients <- read_csv("C:/Users/user/OneDrive - mail.tau.ac.il/Desktop/R/data science apps/final_project/Final_Project-EyalGrinberg/data/food_nutrients.csv")
+data_food_test <- read_csv("C:/Users/user/OneDrive - mail.tau.ac.il/Desktop/R/data science apps/final_project/Final_Project-EyalGrinberg/data/food_test.csv")
+
+```
+```{r}
+#summary_data_gropued_by_idx <- data_food_nutrients %>% group_by(idx) %>% summarize()
+```
+
+```{r}
+merged_df_nutrients <- merge(data_food_nutrients, data_nutrients, by = "nutrient_id", all.x = TRUE)
+merged_df_nutrients <- merged_df_nutrients %>% arrange(idx)
+```
+
+```{r}
+#install.packages("tidytext")
+library(tidytext)
+```
+
+```{r}
+data_train_tokenized_description <- data_food_train %>% unnest_tokens(word, description) %>% count(category, word, sort = TRUE)
+data_train_tokenized_description_grouped_by_cat <- data_train_tokenized_description %>% group_by(category) %>% summarise(word, n)
+```
+
+```{r}
+data_chocolate <- data_train_tokenized_description_grouped_by_cat[data_train_tokenized_description_grouped_by_cat$category == "chocolate" , ]
+data_candy <- data_train_tokenized_description_grouped_by_cat[data_train_tokenized_description_grouped_by_cat$category == "candy" , ]
+data_popcorn_peanuts_seeds_related_snacks <- data_train_tokenized_description_grouped_by_cat[data_train_tokenized_description_grouped_by_cat$category == "popcorn_peanuts_seeds_related_snacks" , ]
+
+#data_train_tokenized_description_grouped_by_cat$word <- factor(data_train_tokenized_description_grouped_by_cat$word)
+#create_report(data = data_train_tokenized_description_grouped_by_cat, y = "n")
+#ExpReport(data_chocolate, Target = "word", op_file = "Report.html", op_dir = getwd())
+```
+
+
+```{r}
+data_train_tokenized_description_2_tokens <- data_food_train %>% unnest_tokens(bigram, description, token = "ngrams", n = 2) %>% count(category, bigram, sort = TRUE)
+data_train_tokenized_description_grouped_by_cat_2_tokens <- data_train_tokenized_description_2_tokens %>% group_by(category) %>% summarise(bigram, n)
+data_popcorn_2_tokens <- data_train_tokenized_description_grouped_by_cat_2_tokens[data_train_tokenized_description_grouped_by_cat_2_tokens$category == "popcorn_peanuts_seeds_related_snacks" , ]
+data_chocolate_2_tokens <- data_train_tokenized_description_grouped_by_cat_2_tokens[data_train_tokenized_description_grouped_by_cat_2_tokens$category == "chocolate" , ]
+```
+
+
+```{r}
+data_train_tokenized_ingredients <- data_food_train %>% unnest_tokens(word, ingredients) %>% count(category, word, sort = TRUE)
+data_train_tokenized_ingredients_grouped_by_cat <- data_train_tokenized_ingredients %>% group_by(category) %>% summarise(word, n)
+```
+
+```{r}
+data_chocolate_ingrediends <- data_train_tokenized_ingredients_grouped_by_cat[data_train_tokenized_ingredients_grouped_by_cat$category == "chocolate" , ]
+data_candy_ingrediends <- data_train_tokenized_ingredients_grouped_by_cat[data_train_tokenized_ingredients_grouped_by_cat$category == "candy" , ]
+```
+
+```{r}
+data_train_tokenized_ingredients_ngrams_5 <- data_food_train %>% unnest_tokens(word, ingredients, token = "ngrams", n = 5) %>% count(category, word, sort = TRUE)
+data_train_tokenized_ingredients_grouped_by_cat_ngrams_5 <- data_train_tokenized_ingredients_ngrams_5 %>% group_by(category) %>% summarise(word, n)
+```
+
+```{r}
+merged_df_nutrients <- merged_df_nutrients[-1]
+```
+
+
+```{r}
+data_food_test$category <- "unknown"
+data_food <- rbind(data_food_train, data_food_test)
+merged_df_nutrients <- merge(merged_df_nutrients, data_food[c(1,8)], by = "idx", all.x = TRUE)
+```
+
+```{r}
+# Grouping by 'category' and 'name', then calculating the mean of 'amount'
+df_nutrients_mean_by_cat <- merged_df_nutrients %>%
+  group_by(category, name) %>%
+  mutate(mean_amount = mean(amount))
+```
+
+```{r}
+nut_grouped_by_cat <- df_nutrients_mean_by_cat %>% group_by(category) %>% reframe(mean_amount)
+```
+
