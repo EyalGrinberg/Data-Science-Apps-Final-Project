@@ -7,27 +7,27 @@ output: html_document
 
 packages and libraries
 ```{r}
-#install.packages(c("DataExplorer","SmartEDA"))
+if(F){
+install.packages(c("DataExplorer","SmartEDA","explore","tidytext","dataMaid"))}
 ```
 ```{r}
 library(DataExplorer)
 library(SmartEDA)
+library(tidyverse)
+library(dataMaid)
+
+
 ```
 ```{r}
-library(tidyverse)
-data_food_train <- read_csv("C:/Users/user/OneDrive - mail.tau.ac.il/Desktop/R/data science apps/final_project/Final_Project-EyalGrinberg/data/food_train.csv")
+data_food_train <- read_csv("data/food_train.csv")
 ```
 
 ```{r}
 ExpReport(data_food_train, Target = "category", op_file = "Report.html", op_dir = getwd())
 ```
 
-```{r}
-install.packages("dataMaid")
-```
-```{r}
-library(dataMaid)
-```
+
+
 ```{r}
 makeDataReport(data = data_food_train, output = "html", replace = TRUE)
 ```
@@ -36,9 +36,9 @@ create_report(data = data_food_train)
 ```
 
 ```{r}
-data_nutrients <- read_csv("C:/Users/user/OneDrive - mail.tau.ac.il/Desktop/R/data science apps/final_project/Final_Project-EyalGrinberg/data/nutrients.csv")
-data_food_nutrients <- read_csv("C:/Users/user/OneDrive - mail.tau.ac.il/Desktop/R/data science apps/final_project/Final_Project-EyalGrinberg/data/food_nutrients.csv")
-data_food_test <- read_csv("C:/Users/user/OneDrive - mail.tau.ac.il/Desktop/R/data science apps/final_project/Final_Project-EyalGrinberg/data/food_test.csv")
+data_nutrients <- read_csv("data/nutrients.csv")
+data_food_nutrients <- read_csv("data/food_nutrients.csv")
+data_food_test <- read_csv("data/food_test.csv")
 
 ```
 ```{r}
@@ -51,7 +51,7 @@ merged_df_nutrients <- merged_df_nutrients %>% arrange(idx)
 ```
 
 ```{r}
-#install.packages("tidytext")
+
 library(tidytext)
 ```
 
