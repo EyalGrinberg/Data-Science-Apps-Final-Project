@@ -8,16 +8,18 @@ output: html_document
 packages and libraries
 ```{r}
 if(F){
-install.packages(c("DataExplorer","SmartEDA","explore","tidytext","dataMaid"))}
+  install.packages(c("DataExplorer","SmartEDA","explore","tidytext","dataMaid"))
+}
 ```
+
 ```{r}
 library(DataExplorer)
 library(SmartEDA)
 library(tidyverse)
 library(dataMaid)
-
-
+library(dplyr)
 ```
+
 ```{r}
 data_food_train <- read_csv("data/food_train.csv")
 ```
@@ -27,10 +29,10 @@ ExpReport(data_food_train, Target = "category", op_file = "Report.html", op_dir 
 ```
 
 
-
 ```{r}
 makeDataReport(data = data_food_train, output = "html", replace = TRUE)
 ```
+
 ```{r}
 create_report(data = data_food_train)
 ```
@@ -41,6 +43,7 @@ data_food_nutrients <- read_csv("data/food_nutrients.csv")
 data_food_test <- read_csv("data/food_test.csv")
 
 ```
+
 ```{r}
 #summary_data_gropued_by_idx <- data_food_nutrients %>% group_by(idx) %>% summarize()
 ```
@@ -51,7 +54,6 @@ merged_df_nutrients <- merged_df_nutrients %>% arrange(idx)
 ```
 
 ```{r}
-
 library(tidytext)
 ```
 
@@ -113,6 +115,50 @@ df_nutrients_mean_by_cat <- merged_df_nutrients %>%
 ```
 
 ```{r}
-nut_grouped_by_cat <- df_nutrients_mean_by_cat %>% group_by(category) %>% reframe(mean_amount)
+nuts_splitted_by_cat <- split(merged_df_nutrients , merged_df_nutrients$category)
+# creating a df for each category
+cakes_nutrients <- nuts_splitted_by_cat$cakes_cupcakes_snack_cakes
+choco_nutrients <- nuts_splitted_by_cat$chocolate
+popcorn_nutrients <- nuts_splitted_by_cat$popcorn_peanuts_seeds_related_snacks
+candy_nutrients <- nuts_splitted_by_cat$candy
+chips_nutrients <- nuts_splitted_by_cat$chips_pretzels_snacks
+cookies_nutrients <- nuts_splitted_by_cat$cookies_biscuits
+test_nutrients <- nuts_splitted_by_cat$unknown
+```
+
+```{r}
+cakes_mean_by_nut <- cakes_nutrients %>% group_by(name) %>% summarize(mean_amount = mean(amount))
+choco_mean_by_nut <- choco_nutrients %>% group_by(name) %>% summarize(mean_amount = mean(amount))
+popcorn_mean_by_nut <- popcorn_nutrients %>% group_by(name) %>% summarize(mean_amount = mean(amount))
+candy_mean_by_nut <- candy_nutrients %>% group_by(name) %>% summarize(mean_amount = mean(amount))
+chips_mean_by_nut <- chips_nutrients %>% group_by(name) %>% summarize(mean_amount = mean(amount))
+cookies_mean_by_nut <- cookies_nutrients %>% group_by(name) %>% summarize(mean_amount = mean(amount))
+test_mean_by_nut <- test_nutrients %>% group_by(name) %>% summarize(mean_amount = mean(amount))
+```
+
+```{r}
+cakes_num_nutrients <- cakes_nutrients %>% group_by(idx) %>% summarize(num_nutrients = length(name))
+choco_num_nutrients <- choco_nutrients %>% group_by(idx) %>% summarize(num_nutrients = length(name))
+popcorn_num_nutrients <- popcorn_nutrients %>% group_by(idx) %>% summarize(num_nutrients = length(name))
+candy_num_nutrients <- candy_nutrients %>% group_by(idx) %>% summarize(num_nutrients = length(name))
+chips_num_nutrients <- chips_nutrients %>% group_by(idx) %>% summarize(num_nutrients = length(name))
+cookies_num_nutrients <- cookies_nutrients %>% group_by(idx) %>% summarize(num_nutrients = length(name))
+test_num_nutrients <- test_nutrients %>% group_by(idx) %>% summarize(num_nutrients = length(name))
+```
+
+```{r}
+plots_func_num_nutriens_by_cat <- function(x, tilte_name) {
+  hist(x$num_nutrients, main = tilte_name)
+}
+```
+
+```{r}
+plots_func_num_nutriens_by_cat(cakes_num_nutrients, "cakes_num_nutrients")
+plots_func_num_nutriens_by_cat(choco_num_nutrients, "choco_num_nutrients")
+plots_func_num_nutriens_by_cat(popcorn_num_nutrients, "popcorn_num_nutrients")
+plots_func_num_nutriens_by_cat(candy_num_nutrients, "candy_num_nutrients")
+plots_func_num_nutriens_by_cat(chips_num_nutrients, "chips_num_nutrients")
+plots_func_num_nutriens_by_cat(cookies_num_nutrients, "cookies_num_nutrients")
+plots_func_num_nutriens_by_cat(test_num_nutrients, "test_num_nutrients")
 ```
 
