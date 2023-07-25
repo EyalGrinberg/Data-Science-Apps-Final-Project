@@ -1,0 +1,629 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={additional material for Data Exploratory},
+  pdfauthor={Eyal Grinberg \& Yam Rozen},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{additional material for Data Exploratory}
+\author{Eyal Grinberg \& Yam Rozen}
+\date{2023-07-19}
+
+\begin{document}
+\maketitle
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{knitr}\SpecialCharTok{::}\NormalTok{opts\_chunk}\SpecialCharTok{$}\FunctionTok{set}\NormalTok{(}\AttributeTok{fig.width=}\DecValTok{20}\NormalTok{, }\AttributeTok{fig.height=}\DecValTok{20}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+packages and libraries
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{if}\NormalTok{(F)\{}
+  \FunctionTok{install.packages}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"DataExplorer"}\NormalTok{,}\StringTok{"SmartEDA"}\NormalTok{,}\StringTok{"explore"}\NormalTok{,}\StringTok{"tidytext"}\NormalTok{,}\StringTok{"dataMaid"}\NormalTok{, }\StringTok{"explore"}\NormalTok{))}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(DataExplorer)}
+\FunctionTok{library}\NormalTok{(SmartEDA)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Registered S3 method overwritten by 'GGally':
+##   method from   
+##   +.gg   ggplot2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## -- Attaching core tidyverse packages ------------------------ tidyverse 2.0.0 --
+## v dplyr     1.1.1     v readr     2.1.4
+## v forcats   1.0.0     v stringr   1.5.0
+## v ggplot2   3.4.1     v tibble    3.2.1
+## v lubridate 1.9.2     v tidyr     1.3.0
+## v purrr     1.0.1
+\end{verbatim}
+
+\begin{verbatim}
+## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()
+## i Use the ]8;;http://conflicted.r-lib.org/conflicted package]8;; to force all conflicts to become errors
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(dataMaid)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'dataMaid'
+## 
+## The following object is masked from 'package:dplyr':
+## 
+##     summarize
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(dplyr)}
+\FunctionTok{library}\NormalTok{(explore)}
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data\_food\_train }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"data/food\_train.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 31751 Columns: 8
+## -- Column specification --------------------------------------------------------
+## Delimiter: ","
+## chr (6): brand, description, ingredients, serving_size_unit, household_servi...
+## dbl (2): idx, serving_size
+## 
+## i Use `spec()` to retrieve the full column specification for this data.
+## i Specify the column types or set `show_col_types = FALSE` to quiet this message.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ExpReport}\NormalTok{(data\_food\_train, }\AttributeTok{Target =} \StringTok{"category"}\NormalTok{, }\AttributeTok{op\_file =} \StringTok{"Report.html"}\NormalTok{, }\AttributeTok{op\_dir =} \FunctionTok{getwd}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{makeDataReport}\NormalTok{(}\AttributeTok{data =}\NormalTok{ data\_food\_train, }\AttributeTok{output =} \StringTok{"html"}\NormalTok{, }\AttributeTok{replace =} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{create\_report}\NormalTok{(}\AttributeTok{data =}\NormalTok{ data\_food\_train)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data\_nutrients }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"data/nutrients.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 235 Columns: 3
+## -- Column specification --------------------------------------------------------
+## Delimiter: ","
+## chr (2): name, unit_name
+## dbl (1): nutrient_id
+## 
+## i Use `spec()` to retrieve the full column specification for this data.
+## i Specify the column types or set `show_col_types = FALSE` to quiet this message.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data\_food\_nutrients }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"data/food\_nutrients.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 493054 Columns: 3
+## -- Column specification --------------------------------------------------------
+## Delimiter: ","
+## dbl (3): idx, nutrient_id, amount
+## 
+## i Use `spec()` to retrieve the full column specification for this data.
+## i Specify the column types or set `show_col_types = FALSE` to quiet this message.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data\_food\_test }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"data/food\_test.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 3525 Columns: 7
+## -- Column specification --------------------------------------------------------
+## Delimiter: ","
+## chr (5): brand, description, ingredients, serving_size_unit, household_servi...
+## dbl (2): idx, serving_size
+## 
+## i Use `spec()` to retrieve the full column specification for this data.
+## i Specify the column types or set `show_col_types = FALSE` to quiet this message.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{merged\_df\_nutrients }\OtherTok{\textless{}{-}} \FunctionTok{merge}\NormalTok{(data\_food\_nutrients, data\_nutrients, }\AttributeTok{by =} \StringTok{"nutrient\_id"}\NormalTok{, }\AttributeTok{all.x =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{merged\_df\_nutrients }\OtherTok{\textless{}{-}}\NormalTok{ merged\_df\_nutrients }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{arrange}\NormalTok{(idx)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidytext)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data\_train\_tokenized\_description }\OtherTok{\textless{}{-}}\NormalTok{ data\_food\_train }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{unnest\_tokens}\NormalTok{(word, description) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{count}\NormalTok{(category, word, }\AttributeTok{sort =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{data\_train\_tokenized\_description\_grouped\_by\_cat }\OtherTok{\textless{}{-}}\NormalTok{ data\_train\_tokenized\_description }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{group\_by}\NormalTok{(category) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{summarise}\NormalTok{(word, n)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Returning more (or less) than 1 row per `summarise()` group was deprecated in
+## dplyr 1.1.0.
+## i Please use `reframe()` instead.
+## i When switching from `summarise()` to `reframe()`, remember that `reframe()`
+##   always returns an ungrouped data frame and adjust accordingly.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.
+\end{verbatim}
+
+\begin{verbatim}
+## `summarise()` has grouped output by 'category'. You can override using the
+## `.groups` argument.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data\_chocolate }\OtherTok{\textless{}{-}}\NormalTok{ data\_train\_tokenized\_description\_grouped\_by\_cat[data\_train\_tokenized\_description\_grouped\_by\_cat}\SpecialCharTok{$}\NormalTok{category }\SpecialCharTok{==} \StringTok{"chocolate"}\NormalTok{ , ]}
+\NormalTok{data\_candy }\OtherTok{\textless{}{-}}\NormalTok{ data\_train\_tokenized\_description\_grouped\_by\_cat[data\_train\_tokenized\_description\_grouped\_by\_cat}\SpecialCharTok{$}\NormalTok{category }\SpecialCharTok{==} \StringTok{"candy"}\NormalTok{ , ]}
+\NormalTok{data\_popcorn\_peanuts\_seeds\_related\_snacks }\OtherTok{\textless{}{-}}\NormalTok{ data\_train\_tokenized\_description\_grouped\_by\_cat[data\_train\_tokenized\_description\_grouped\_by\_cat}\SpecialCharTok{$}\NormalTok{category }\SpecialCharTok{==} \StringTok{"popcorn\_peanuts\_seeds\_related\_snacks"}\NormalTok{ , ]}
+
+\CommentTok{\#data\_train\_tokenized\_description\_grouped\_by\_cat$word \textless{}{-} factor(data\_train\_tokenized\_description\_grouped\_by\_cat$word)}
+\CommentTok{\#create\_report(data = data\_train\_tokenized\_description\_grouped\_by\_cat, y = "n")}
+\CommentTok{\#ExpReport(data\_chocolate, Target = "word", op\_file = "Report.html", op\_dir = getwd())}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data\_train\_tokenized\_description\_2\_tokens }\OtherTok{\textless{}{-}}\NormalTok{ data\_food\_train }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{unnest\_tokens}\NormalTok{(bigram, description, }\AttributeTok{token =} \StringTok{"ngrams"}\NormalTok{, }\AttributeTok{n =} \DecValTok{2}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{count}\NormalTok{(category, bigram, }\AttributeTok{sort =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{data\_train\_tokenized\_description\_grouped\_by\_cat\_2\_tokens }\OtherTok{\textless{}{-}}\NormalTok{ data\_train\_tokenized\_description\_2\_tokens }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{group\_by}\NormalTok{(category) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{summarise}\NormalTok{(bigram, n)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Returning more (or less) than 1 row per `summarise()` group was deprecated in
+## dplyr 1.1.0.
+## i Please use `reframe()` instead.
+## i When switching from `summarise()` to `reframe()`, remember that `reframe()`
+##   always returns an ungrouped data frame and adjust accordingly.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.
+\end{verbatim}
+
+\begin{verbatim}
+## `summarise()` has grouped output by 'category'. You can override using the
+## `.groups` argument.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data\_popcorn\_2\_tokens }\OtherTok{\textless{}{-}}\NormalTok{ data\_train\_tokenized\_description\_grouped\_by\_cat\_2\_tokens[data\_train\_tokenized\_description\_grouped\_by\_cat\_2\_tokens}\SpecialCharTok{$}\NormalTok{category }\SpecialCharTok{==} \StringTok{"popcorn\_peanuts\_seeds\_related\_snacks"}\NormalTok{ , ]}
+\NormalTok{data\_chocolate\_2\_tokens }\OtherTok{\textless{}{-}}\NormalTok{ data\_train\_tokenized\_description\_grouped\_by\_cat\_2\_tokens[data\_train\_tokenized\_description\_grouped\_by\_cat\_2\_tokens}\SpecialCharTok{$}\NormalTok{category }\SpecialCharTok{==} \StringTok{"chocolate"}\NormalTok{ , ]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data\_train\_tokenized\_ingredients }\OtherTok{\textless{}{-}}\NormalTok{ data\_food\_train }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{unnest\_tokens}\NormalTok{(word, ingredients) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{count}\NormalTok{(category, word, }\AttributeTok{sort =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{data\_train\_tokenized\_ingredients\_grouped\_by\_cat }\OtherTok{\textless{}{-}}\NormalTok{ data\_train\_tokenized\_ingredients }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{group\_by}\NormalTok{(category) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{summarise}\NormalTok{(word, n)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Returning more (or less) than 1 row per `summarise()` group was deprecated in
+## dplyr 1.1.0.
+## i Please use `reframe()` instead.
+## i When switching from `summarise()` to `reframe()`, remember that `reframe()`
+##   always returns an ungrouped data frame and adjust accordingly.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.
+\end{verbatim}
+
+\begin{verbatim}
+## `summarise()` has grouped output by 'category'. You can override using the
+## `.groups` argument.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data\_chocolate\_ingrediends }\OtherTok{\textless{}{-}}\NormalTok{ data\_train\_tokenized\_ingredients\_grouped\_by\_cat[data\_train\_tokenized\_ingredients\_grouped\_by\_cat}\SpecialCharTok{$}\NormalTok{category }\SpecialCharTok{==} \StringTok{"chocolate"}\NormalTok{ , ]}
+\NormalTok{data\_candy\_ingrediends }\OtherTok{\textless{}{-}}\NormalTok{ data\_train\_tokenized\_ingredients\_grouped\_by\_cat[data\_train\_tokenized\_ingredients\_grouped\_by\_cat}\SpecialCharTok{$}\NormalTok{category }\SpecialCharTok{==} \StringTok{"candy"}\NormalTok{ , ]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data\_train\_tokenized\_ingredients\_ngrams\_5 }\OtherTok{\textless{}{-}}\NormalTok{ data\_food\_train }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{unnest\_tokens}\NormalTok{(word, ingredients, }\AttributeTok{token =} \StringTok{"ngrams"}\NormalTok{, }\AttributeTok{n =} \DecValTok{5}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{count}\NormalTok{(category, word, }\AttributeTok{sort =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{data\_train\_tokenized\_ingredients\_grouped\_by\_cat\_ngrams\_5 }\OtherTok{\textless{}{-}}\NormalTok{ data\_train\_tokenized\_ingredients\_ngrams\_5 }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{group\_by}\NormalTok{(category) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{summarise}\NormalTok{(word, n)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Returning more (or less) than 1 row per `summarise()` group was deprecated in
+## dplyr 1.1.0.
+## i Please use `reframe()` instead.
+## i When switching from `summarise()` to `reframe()`, remember that `reframe()`
+##   always returns an ungrouped data frame and adjust accordingly.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.
+\end{verbatim}
+
+\begin{verbatim}
+## `summarise()` has grouped output by 'category'. You can override using the
+## `.groups` argument.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{merged\_df\_nutrients }\OtherTok{\textless{}{-}}\NormalTok{ merged\_df\_nutrients[}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data\_food\_test}\SpecialCharTok{$}\NormalTok{category }\OtherTok{\textless{}{-}} \StringTok{"unknown"}
+\NormalTok{data\_food }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(data\_food\_train, data\_food\_test)}
+\NormalTok{merged\_df\_nutrients }\OtherTok{\textless{}{-}} \FunctionTok{merge}\NormalTok{(merged\_df\_nutrients, data\_food[}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{8}\NormalTok{)], }\AttributeTok{by =} \StringTok{"idx"}\NormalTok{, }\AttributeTok{all.x =} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Grouping by \textquotesingle{}category\textquotesingle{} and \textquotesingle{}name\textquotesingle{}, then calculating the mean of \textquotesingle{}amount\textquotesingle{}}
+\NormalTok{df\_nutrients\_mean\_by\_cat }\OtherTok{\textless{}{-}}\NormalTok{ merged\_df\_nutrients }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(category, name) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{mean\_amount =} \FunctionTok{mean}\NormalTok{(amount))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{nuts\_splitted\_by\_cat }\OtherTok{\textless{}{-}} \FunctionTok{split}\NormalTok{(merged\_df\_nutrients , merged\_df\_nutrients}\SpecialCharTok{$}\NormalTok{category)}
+\CommentTok{\# creating a df for each category}
+\NormalTok{cakes\_nutrients }\OtherTok{\textless{}{-}}\NormalTok{ nuts\_splitted\_by\_cat}\SpecialCharTok{$}\NormalTok{cakes\_cupcakes\_snack\_cakes}
+\NormalTok{choco\_nutrients }\OtherTok{\textless{}{-}}\NormalTok{ nuts\_splitted\_by\_cat}\SpecialCharTok{$}\NormalTok{chocolate}
+\NormalTok{popcorn\_nutrients }\OtherTok{\textless{}{-}}\NormalTok{ nuts\_splitted\_by\_cat}\SpecialCharTok{$}\NormalTok{popcorn\_peanuts\_seeds\_related\_snacks}
+\NormalTok{candy\_nutrients }\OtherTok{\textless{}{-}}\NormalTok{ nuts\_splitted\_by\_cat}\SpecialCharTok{$}\NormalTok{candy}
+\NormalTok{chips\_nutrients }\OtherTok{\textless{}{-}}\NormalTok{ nuts\_splitted\_by\_cat}\SpecialCharTok{$}\NormalTok{chips\_pretzels\_snacks}
+\NormalTok{cookies\_nutrients }\OtherTok{\textless{}{-}}\NormalTok{ nuts\_splitted\_by\_cat}\SpecialCharTok{$}\NormalTok{cookies\_biscuits}
+\NormalTok{test\_nutrients }\OtherTok{\textless{}{-}}\NormalTok{ nuts\_splitted\_by\_cat}\SpecialCharTok{$}\NormalTok{unknown}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cakes\_mean\_by\_nut }\OtherTok{\textless{}{-}}\NormalTok{ cakes\_nutrients }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{group\_by}\NormalTok{(name) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{reframe}\NormalTok{(}\AttributeTok{mean\_amount =} \FunctionTok{mean}\NormalTok{(amount)) }
+\NormalTok{choco\_mean\_by\_nut }\OtherTok{\textless{}{-}}\NormalTok{ choco\_nutrients }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{group\_by}\NormalTok{(name) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{reframe}\NormalTok{(}\AttributeTok{mean\_amount =} \FunctionTok{mean}\NormalTok{(amount))}
+\NormalTok{popcorn\_mean\_by\_nut }\OtherTok{\textless{}{-}}\NormalTok{ popcorn\_nutrients }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{group\_by}\NormalTok{(name) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{reframe}\NormalTok{(}\AttributeTok{mean\_amount =} \FunctionTok{mean}\NormalTok{(amount))}
+\NormalTok{candy\_mean\_by\_nut }\OtherTok{\textless{}{-}}\NormalTok{ candy\_nutrients }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{group\_by}\NormalTok{(name) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{reframe}\NormalTok{(}\AttributeTok{mean\_amount =} \FunctionTok{mean}\NormalTok{(amount))}
+\NormalTok{chips\_mean\_by\_nut }\OtherTok{\textless{}{-}}\NormalTok{ chips\_nutrients }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{group\_by}\NormalTok{(name) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{reframe}\NormalTok{(}\AttributeTok{mean\_amount =} \FunctionTok{mean}\NormalTok{(amount))}
+\NormalTok{cookies\_mean\_by\_nut }\OtherTok{\textless{}{-}}\NormalTok{ cookies\_nutrients }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{group\_by}\NormalTok{(name) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{reframe}\NormalTok{(}\AttributeTok{mean\_amount =} \FunctionTok{mean}\NormalTok{(amount))}
+\NormalTok{test\_mean\_by\_nut }\OtherTok{\textless{}{-}}\NormalTok{ test\_nutrients }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{group\_by}\NormalTok{(name) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{reframe}\NormalTok{(}\AttributeTok{mean\_amount =} \FunctionTok{mean}\NormalTok{(amount))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cakes\_num\_nutrients }\OtherTok{\textless{}{-}}\NormalTok{ cakes\_nutrients }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{group\_by}\NormalTok{(idx) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{reframe}\NormalTok{(}\AttributeTok{num\_nutrients =} \FunctionTok{length}\NormalTok{(name))}
+\NormalTok{choco\_num\_nutrients }\OtherTok{\textless{}{-}}\NormalTok{ choco\_nutrients }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{group\_by}\NormalTok{(idx) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{reframe}\NormalTok{(}\AttributeTok{num\_nutrients =} \FunctionTok{length}\NormalTok{(name))}
+\NormalTok{popcorn\_num\_nutrients }\OtherTok{\textless{}{-}}\NormalTok{ popcorn\_nutrients }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{group\_by}\NormalTok{(idx) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{reframe}\NormalTok{(}\AttributeTok{num\_nutrients =} \FunctionTok{length}\NormalTok{(name))}
+\NormalTok{candy\_num\_nutrients }\OtherTok{\textless{}{-}}\NormalTok{ candy\_nutrients }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{group\_by}\NormalTok{(idx) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{reframe}\NormalTok{(}\AttributeTok{num\_nutrients =} \FunctionTok{length}\NormalTok{(name))}
+\NormalTok{chips\_num\_nutrients }\OtherTok{\textless{}{-}}\NormalTok{ chips\_nutrients }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{group\_by}\NormalTok{(idx) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{reframe}\NormalTok{(}\AttributeTok{num\_nutrients =} \FunctionTok{length}\NormalTok{(name))}
+\NormalTok{cookies\_num\_nutrients }\OtherTok{\textless{}{-}}\NormalTok{ cookies\_nutrients }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{group\_by}\NormalTok{(idx) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{reframe}\NormalTok{(}\AttributeTok{num\_nutrients =} \FunctionTok{length}\NormalTok{(name))}
+\NormalTok{test\_num\_nutrients }\OtherTok{\textless{}{-}}\NormalTok{ test\_nutrients }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{group\_by}\NormalTok{(idx) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{reframe}\NormalTok{(}\AttributeTok{num\_nutrients =} \FunctionTok{length}\NormalTok{(name))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{plots\_func\_num\_nutriens\_by\_cat }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x, title\_name) \{}
+  \FunctionTok{hist}\NormalTok{(x}\SpecialCharTok{$}\NormalTok{num\_nutrients, }\AttributeTok{main =}\NormalTok{ title\_name)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plots\_func\_num\_nutriens\_by\_cat}\NormalTok{(cakes\_num\_nutrients, }\StringTok{"cakes\_num\_nutrients"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{additional_material_for_Data_Exploratory_files/figure-latex/unnamed-chunk-24-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plots\_func\_num\_nutriens\_by\_cat}\NormalTok{(choco\_num\_nutrients, }\StringTok{"choco\_num\_nutrients"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{additional_material_for_Data_Exploratory_files/figure-latex/unnamed-chunk-24-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plots\_func\_num\_nutriens\_by\_cat}\NormalTok{(popcorn\_num\_nutrients, }\StringTok{"popcorn\_num\_nutrients"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{additional_material_for_Data_Exploratory_files/figure-latex/unnamed-chunk-24-3.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plots\_func\_num\_nutriens\_by\_cat}\NormalTok{(candy\_num\_nutrients, }\StringTok{"candy\_num\_nutrients"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{additional_material_for_Data_Exploratory_files/figure-latex/unnamed-chunk-24-4.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plots\_func\_num\_nutriens\_by\_cat}\NormalTok{(chips\_num\_nutrients, }\StringTok{"chips\_num\_nutrients"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{additional_material_for_Data_Exploratory_files/figure-latex/unnamed-chunk-24-5.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plots\_func\_num\_nutriens\_by\_cat}\NormalTok{(cookies\_num\_nutrients, }\StringTok{"cookies\_num\_nutrients"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{additional_material_for_Data_Exploratory_files/figure-latex/unnamed-chunk-24-6.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plots\_func\_num\_nutriens\_by\_cat}\NormalTok{(test\_num\_nutrients, }\StringTok{"test\_num\_nutrients"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{additional_material_for_Data_Exploratory_files/figure-latex/unnamed-chunk-24-7.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# creating boxplots}
+\FunctionTok{boxplot}\NormalTok{(cakes\_num\_nutrients}\SpecialCharTok{$}\NormalTok{num\_nutrients, choco\_num\_nutrients}\SpecialCharTok{$}\NormalTok{num\_nutrients, popcorn\_num\_nutrients}\SpecialCharTok{$}\NormalTok{num\_nutrients, candy\_num\_nutrients}\SpecialCharTok{$}\NormalTok{num\_nutrients, chips\_num\_nutrients}\SpecialCharTok{$}\NormalTok{num\_nutrients, cookies\_num\_nutrients}\SpecialCharTok{$}\NormalTok{num\_nutrients, test\_num\_nutrients}\SpecialCharTok{$}\NormalTok{num\_nutrients, }\AttributeTok{main =} \StringTok{"boxplot for num nutrients per category"}\NormalTok{, }\AttributeTok{names =} \FunctionTok{c}\NormalTok{(}\StringTok{"cakes"}\NormalTok{, }\StringTok{"chocolate"}\NormalTok{, }\StringTok{"popcorn"}\NormalTok{, }\StringTok{"candy"}\NormalTok{, }\StringTok{"chips"}\NormalTok{, }\StringTok{"cookies"}\NormalTok{, }\StringTok{"test"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{additional_material_for_Data_Exploratory_files/figure-latex/unnamed-chunk-25-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# create a df of the nutrients }
+\NormalTok{m }\OtherTok{\textless{}{-}} \FunctionTok{merge}\NormalTok{(cakes\_mean\_by\_nut,candy\_mean\_by\_nut, }\AttributeTok{by =} \StringTok{"name"}\NormalTok{, }\AttributeTok{all =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{m }\OtherTok{\textless{}{-}} \FunctionTok{merge}\NormalTok{(m,popcorn\_mean\_by\_nut, }\AttributeTok{by =} \StringTok{"name"}\NormalTok{, }\AttributeTok{all =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{m }\OtherTok{\textless{}{-}} \FunctionTok{merge}\NormalTok{(m,choco\_mean\_by\_nut, }\AttributeTok{by =} \StringTok{"name"}\NormalTok{, }\AttributeTok{all =} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in merge.data.frame(m, choco_mean_by_nut, by = "name", all = TRUE):
+## column names 'mean_amount.x', 'mean_amount.y' are duplicated in the result
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{m }\OtherTok{\textless{}{-}} \FunctionTok{merge}\NormalTok{(m,chips\_mean\_by\_nut, }\AttributeTok{by =} \StringTok{"name"}\NormalTok{, }\AttributeTok{all =} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in merge.data.frame(m, chips_mean_by_nut, by = "name", all = TRUE):
+## column names 'mean_amount.x', 'mean_amount.y' are duplicated in the result
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{m }\OtherTok{\textless{}{-}} \FunctionTok{merge}\NormalTok{(m,cookies\_mean\_by\_nut, }\AttributeTok{by =} \StringTok{"name"}\NormalTok{, }\AttributeTok{all =} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in merge.data.frame(m, cookies_mean_by_nut, by = "name", all = TRUE):
+## column names 'mean_amount.x', 'mean_amount.y', 'mean_amount.x', 'mean_amount.y'
+## are duplicated in the result
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{nutrients\_mean\_amount\_with\_zero\_amounts }\OtherTok{\textless{}{-}} \FunctionTok{merge}\NormalTok{(m,test\_mean\_by\_nut, }\AttributeTok{by =} \StringTok{"name"}\NormalTok{, }\AttributeTok{all =} \ConstantTok{TRUE}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in merge.data.frame(m, test_mean_by_nut, by = "name", all = TRUE):
+## column names 'mean_amount.x', 'mean_amount.y', 'mean_amount.x', 'mean_amount.y'
+## are duplicated in the result
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{colnames}\NormalTok{(nutrients\_mean\_amount\_with\_zero\_amounts) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"nutrient"}\NormalTok{, }\StringTok{"cakes"}\NormalTok{, }\StringTok{"candy"}\NormalTok{, }\StringTok{"popcorn"}\NormalTok{, }\StringTok{"chocolate"}\NormalTok{, }\StringTok{"chips"}\NormalTok{, }\StringTok{"cookies"}\NormalTok{, }\StringTok{"test"}\NormalTok{)}
+\CommentTok{\# replace NAs with 0}
+\NormalTok{nutrients\_mean\_amount\_with\_zero\_amounts[}\FunctionTok{is.na}\NormalTok{(nutrients\_mean\_amount\_with\_zero\_amounts)] }\OtherTok{\textless{}{-}} \DecValTok{0}  
+\FunctionTok{rownames}\NormalTok{(nutrients\_mean\_amount\_with\_zero\_amounts) }\OtherTok{\textless{}{-}}\NormalTok{ nutrients\_mean\_amount\_with\_zero\_amounts[,}\DecValTok{1}\NormalTok{]}
+\CommentTok{\#nutrients\_mean\_amount\_with\_zero\_amounts \textless{}{-} nutrients\_mean\_amount\_with\_zero\_amounts[,{-}1]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{nuts\_pivoted }\OtherTok{\textless{}{-}}\NormalTok{ nutrients\_mean\_amount\_with\_zero\_amounts }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{pivot\_longer}\NormalTok{(}\SpecialCharTok{!}\NormalTok{nutrient, }\AttributeTok{names\_to =} \StringTok{"category"}\NormalTok{, }\AttributeTok{values\_to =} \StringTok{"mean\_amount"}\NormalTok{)}
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ nuts\_pivoted, }\AttributeTok{mapping =} \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ category, }\AttributeTok{y =}\NormalTok{ mean\_amount, }\AttributeTok{color =}\NormalTok{ category)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{facet\_wrap}\NormalTok{(. }\SpecialCharTok{\textasciitilde{}}\NormalTok{ nutrient, }\AttributeTok{scales =} \StringTok{"free\_y"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"category vs. nutrient mean amount of each nutrient"}\NormalTok{,}
+       \AttributeTok{subtitle =} \StringTok{"Faceted by nutrient"}\NormalTok{,}
+       \AttributeTok{x =} \StringTok{"category"}\NormalTok{, }\AttributeTok{y =}\StringTok{"mean\_amount"}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{strip.text.x =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{4}\NormalTok{, }\AttributeTok{margin =} \FunctionTok{margin}\NormalTok{()),}
+        \AttributeTok{strip.text.y =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{20}\NormalTok{, }\AttributeTok{margin =} \FunctionTok{margin}\NormalTok{()))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{additional_material_for_Data_Exploratory_files/figure-latex/unnamed-chunk-27-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#ggsave("plot.png", plot, width = 10, height = 10, units = c("in"))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#transpoze the df}
+\NormalTok{transpozed\_mean\_amount\_with\_zero\_amounts }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{( }\FunctionTok{t}\NormalTok{(nutrients\_mean\_amount\_with\_zero\_amounts) )}
+\FunctionTok{colnames}\NormalTok{(transpozed\_mean\_amount\_with\_zero\_amounts) }\OtherTok{\textless{}{-}}\NormalTok{ transpozed\_mean\_amount\_with\_zero\_amounts[}\DecValTok{1}\NormalTok{,]}
+\NormalTok{transpozed\_mean\_amount\_with\_zero\_amounts }\OtherTok{\textless{}{-}}\NormalTok{ transpozed\_mean\_amount\_with\_zero\_amounts[}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,]}
+\NormalTok{transpozed\_mean\_amount\_with\_zero\_amounts }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(}\FunctionTok{sapply}\NormalTok{(transpozed\_mean\_amount\_with\_zero\_amounts, as.numeric))}
+\FunctionTok{rownames}\NormalTok{(transpozed\_mean\_amount\_with\_zero\_amounts) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"cakes"}\NormalTok{, }\StringTok{"candy"}\NormalTok{, }\StringTok{"popcorn"}\NormalTok{, }\StringTok{"chocolate"}\NormalTok{, }\StringTok{"chips"}\NormalTok{, }\StringTok{"cookies"}\NormalTok{, }\StringTok{"test"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+
+\end{document}
