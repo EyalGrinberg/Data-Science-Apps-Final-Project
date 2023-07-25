@@ -2,13 +2,16 @@
 title: "additional material for Data Exploratory"
 author: "Eyal Grinberg & Yam Rozen"
 date: "2023-07-19"
-output: html_document
+output:
+  word_document: default
+  html_document: default
 ---
 
 packages and libraries
+
 ```{r}
 if(F){
-  install.packages(c("DataExplorer","SmartEDA","explore","tidytext","dataMaid"))
+  install.packages(c("DataExplorer","SmartEDA","explore","tidytext","dataMaid", "explore"))
 }
 ```
 
@@ -18,22 +21,23 @@ library(SmartEDA)
 library(tidyverse)
 library(dataMaid)
 library(dplyr)
+library(explore)
+library(ggplot2)
 ```
 
 ```{r}
 data_food_train <- read_csv("data/food_train.csv")
 ```
 
-```{r}
+```{r, eval=FALSE}
 ExpReport(data_food_train, Target = "category", op_file = "Report.html", op_dir = getwd())
 ```
 
-
-```{r}
+```{r, eval=FALSE}
 makeDataReport(data = data_food_train, output = "html", replace = TRUE)
 ```
 
-```{r}
+```{r, eval=FALSE}
 create_report(data = data_food_train)
 ```
 
@@ -41,11 +45,6 @@ create_report(data = data_food_train)
 data_nutrients <- read_csv("data/nutrients.csv")
 data_food_nutrients <- read_csv("data/food_nutrients.csv")
 data_food_test <- read_csv("data/food_test.csv")
-
-```
-
-```{r}
-#summary_data_gropued_by_idx <- data_food_nutrients %>% group_by(idx) %>% summarize()
 ```
 
 ```{r}
@@ -72,14 +71,12 @@ data_popcorn_peanuts_seeds_related_snacks <- data_train_tokenized_description_gr
 #ExpReport(data_chocolate, Target = "word", op_file = "Report.html", op_dir = getwd())
 ```
 
-
 ```{r}
 data_train_tokenized_description_2_tokens <- data_food_train %>% unnest_tokens(bigram, description, token = "ngrams", n = 2) %>% count(category, bigram, sort = TRUE)
 data_train_tokenized_description_grouped_by_cat_2_tokens <- data_train_tokenized_description_2_tokens %>% group_by(category) %>% summarise(bigram, n)
 data_popcorn_2_tokens <- data_train_tokenized_description_grouped_by_cat_2_tokens[data_train_tokenized_description_grouped_by_cat_2_tokens$category == "popcorn_peanuts_seeds_related_snacks" , ]
 data_chocolate_2_tokens <- data_train_tokenized_description_grouped_by_cat_2_tokens[data_train_tokenized_description_grouped_by_cat_2_tokens$category == "chocolate" , ]
 ```
-
 
 ```{r}
 data_train_tokenized_ingredients <- data_food_train %>% unnest_tokens(word, ingredients) %>% count(category, word, sort = TRUE)
@@ -99,7 +96,6 @@ data_train_tokenized_ingredients_grouped_by_cat_ngrams_5 <- data_train_tokenized
 ```{r}
 merged_df_nutrients <- merged_df_nutrients[-1]
 ```
-
 
 ```{r}
 data_food_test$category <- "unknown"
@@ -147,12 +143,12 @@ test_num_nutrients <- test_nutrients %>% group_by(idx) %>% summarize(num_nutrien
 ```
 
 ```{r}
-plots_func_num_nutriens_by_cat <- function(x, tilte_name) {
-  hist(x$num_nutrients, main = tilte_name)
+plots_func_num_nutriens_by_cat <- function(x, title_name) {
+  hist(x$num_nutrients, main = title_name)
 }
 ```
 
-```{r}
+```{r, eval = FALSE}
 plots_func_num_nutriens_by_cat(cakes_num_nutrients, "cakes_num_nutrients")
 plots_func_num_nutriens_by_cat(choco_num_nutrients, "choco_num_nutrients")
 plots_func_num_nutriens_by_cat(popcorn_num_nutrients, "popcorn_num_nutrients")
@@ -160,5 +156,50 @@ plots_func_num_nutriens_by_cat(candy_num_nutrients, "candy_num_nutrients")
 plots_func_num_nutriens_by_cat(chips_num_nutrients, "chips_num_nutrients")
 plots_func_num_nutriens_by_cat(cookies_num_nutrients, "cookies_num_nutrients")
 plots_func_num_nutriens_by_cat(test_num_nutrients, "test_num_nutrients")
+```
+
+```{r, eval=FALSE}
+# creating boxplots
+boxplot(cakes_num_nutrients$num_nutrients, choco_num_nutrients$num_nutrients, popcorn_num_nutrients$num_nutrients, candy_num_nutrients$num_nutrients, chips_num_nutrients$num_nutrients, cookies_num_nutrients$num_nutrients, test_num_nutrients$num_nutrients, main = "boxplot for num nutrients per category", names = c("cakes", "chocolate", "popcorn", "candy", "chips", "cookies", "test"))
+```
+
+```{r}
+# create a df of the nutrients 
+m <- merge(cakes_mean_by_nut,candy_mean_by_nut, by = "name", all = TRUE)
+m <- merge(m,popcorn_mean_by_nut, by = "name", all = TRUE)
+m <- merge(m,choco_mean_by_nut, by = "name", all = TRUE)
+m <- merge(m,chips_mean_by_nut, by = "name", all = TRUE)
+m <- merge(m,cookies_mean_by_nut, by = "name", all = TRUE)
+nutrients_mean_amount_with_zero_amounts <- merge(m,test_mean_by_nut, by = "name", all = TRUE) 
+colnames(nutrients_mean_amount_with_zero_amounts) <- c("nutrient", "cakes", "candy", "popcorn", "chocolate", "chips", "cookies", "test")
+# replace NAs with 0
+nutrients_mean_amount_with_zero_amounts[is.na(nutrients_mean_amount_with_zero_amounts)] <- 0  
+rownames(nutrients_mean_amount_with_zero_amounts) <- nutrients_mean_amount_with_zero_amounts[,1]
+#nutrients_mean_amount_with_zero_amounts <- nutrients_mean_amount_with_zero_amounts[,-1]
+```
+
+```{r}
+nuts_pivoted <- nutrients_mean_amount_with_zero_amounts %>% pivot_longer(!nutrient, names_to = "category", values_to = "mean_amount")
+ggplot(data = nuts_pivoted, mapping = aes(x = category, y = mean_amount)) +
+  geom_point() +
+  facet_wrap(. ~ nutrient, nrow = 1) +
+  labs(title = "category vs. nutrient mean amount of each nutrient",
+       subtitle = "Faceted by nutrient",
+       x = "category", y ="mean_amount") 
+
+#ggsave("plot.png", plot, width = 10, height = 10, units = c("in"))
+```
+
+
+
+
+
+```{r}
+#transpoze the df
+transpozed_mean_amount_with_zero_amounts <- as.data.frame( t(nutrients_mean_amount_with_zero_amounts) )
+colnames(transpozed_mean_amount_with_zero_amounts) <- transpozed_mean_amount_with_zero_amounts[1,]
+transpozed_mean_amount_with_zero_amounts <- transpozed_mean_amount_with_zero_amounts[-1,]
+transpozed_mean_amount_with_zero_amounts <- as.data.frame(sapply(transpozed_mean_amount_with_zero_amounts, as.numeric))
+rownames(transpozed_mean_amount_with_zero_amounts) <- c("cakes", "candy", "popcorn", "chocolate", "chips", "cookies", "test")
 ```
 
