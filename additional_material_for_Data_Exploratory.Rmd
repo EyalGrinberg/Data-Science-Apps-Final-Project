@@ -26,6 +26,7 @@ library(dataMaid)
 library(dplyr)
 library(explore)
 library(ggplot2)
+library(tidytext)
 ```
 
 ```{r}
@@ -53,10 +54,6 @@ data_food_test <- read_csv("data/food_test.csv")
 ```{r}
 merged_df_nutrients <- merge(data_food_nutrients, data_nutrients, by = "nutrient_id", all.x = TRUE)
 merged_df_nutrients <- merged_df_nutrients %>% arrange(idx)
-```
-
-```{r}
-library(tidytext)
 ```
 
 ```{r}
