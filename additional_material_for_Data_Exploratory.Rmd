@@ -158,7 +158,7 @@ plots_func_num_nutriens_by_cat(cookies_num_nutrients, "cookies_num_nutrients")
 plots_func_num_nutriens_by_cat(test_num_nutrients, "test_num_nutrients")
 ```
 
-```{r, eval=FALSE}
+```{r }
 # creating boxplots
 boxplot(cakes_num_nutrients$num_nutrients, choco_num_nutrients$num_nutrients, popcorn_num_nutrients$num_nutrients, candy_num_nutrients$num_nutrients, chips_num_nutrients$num_nutrients, cookies_num_nutrients$num_nutrients, test_num_nutrients$num_nutrients, main = "boxplot for num nutrients per category", names = c("cakes", "chocolate", "popcorn", "candy", "chips", "cookies", "test"))
 ```
