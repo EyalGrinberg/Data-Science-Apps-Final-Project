@@ -3,9 +3,12 @@ title: "additional material for Data Exploratory"
 author: "Eyal Grinberg & Yam Rozen"
 date: "2023-07-19"
 output:
-  word_document: default
   html_document: default
+  pdf_document: default
 ---
+```{r}
+knitr::opts_chunk$set(fig.width=8, fig.height=8)
+```
 
 packages and libraries
 
@@ -23,6 +26,7 @@ library(dataMaid)
 library(dplyr)
 library(explore)
 library(ggplot2)
+library(tidytext)
 ```
 
 ```{r}
@@ -50,10 +54,6 @@ data_food_test <- read_csv("data/food_test.csv")
 ```{r}
 merged_df_nutrients <- merge(data_food_nutrients, data_nutrients, by = "nutrient_id", all.x = TRUE)
 merged_df_nutrients <- merged_df_nutrients %>% arrange(idx)
-```
-
-```{r}
-library(tidytext)
 ```
 
 ```{r}
@@ -123,23 +123,23 @@ test_nutrients <- nuts_splitted_by_cat$unknown
 ```
 
 ```{r}
-cakes_mean_by_nut <- cakes_nutrients %>% group_by(name) %>% summarize(mean_amount = mean(amount))
-choco_mean_by_nut <- choco_nutrients %>% group_by(name) %>% summarize(mean_amount = mean(amount))
-popcorn_mean_by_nut <- popcorn_nutrients %>% group_by(name) %>% summarize(mean_amount = mean(amount))
-candy_mean_by_nut <- candy_nutrients %>% group_by(name) %>% summarize(mean_amount = mean(amount))
-chips_mean_by_nut <- chips_nutrients %>% group_by(name) %>% summarize(mean_amount = mean(amount))
-cookies_mean_by_nut <- cookies_nutrients %>% group_by(name) %>% summarize(mean_amount = mean(amount))
-test_mean_by_nut <- test_nutrients %>% group_by(name) %>% summarize(mean_amount = mean(amount))
+cakes_mean_by_nut <- cakes_nutrients %>% group_by(name) %>% reframe(mean_amount = mean(amount)) 
+choco_mean_by_nut <- choco_nutrients %>% group_by(name) %>% reframe(mean_amount = mean(amount))
+popcorn_mean_by_nut <- popcorn_nutrients %>% group_by(name) %>% reframe(mean_amount = mean(amount))
+candy_mean_by_nut <- candy_nutrients %>% group_by(name) %>% reframe(mean_amount = mean(amount))
+chips_mean_by_nut <- chips_nutrients %>% group_by(name) %>% reframe(mean_amount = mean(amount))
+cookies_mean_by_nut <- cookies_nutrients %>% group_by(name) %>% reframe(mean_amount = mean(amount))
+test_mean_by_nut <- test_nutrients %>% group_by(name) %>% reframe(mean_amount = mean(amount))
 ```
 
 ```{r}
-cakes_num_nutrients <- cakes_nutrients %>% group_by(idx) %>% summarize(num_nutrients = length(name))
-choco_num_nutrients <- choco_nutrients %>% group_by(idx) %>% summarize(num_nutrients = length(name))
-popcorn_num_nutrients <- popcorn_nutrients %>% group_by(idx) %>% summarize(num_nutrients = length(name))
-candy_num_nutrients <- candy_nutrients %>% group_by(idx) %>% summarize(num_nutrients = length(name))
-chips_num_nutrients <- chips_nutrients %>% group_by(idx) %>% summarize(num_nutrients = length(name))
-cookies_num_nutrients <- cookies_nutrients %>% group_by(idx) %>% summarize(num_nutrients = length(name))
-test_num_nutrients <- test_nutrients %>% group_by(idx) %>% summarize(num_nutrients = length(name))
+cakes_num_nutrients <- cakes_nutrients %>% group_by(idx) %>% reframe(num_nutrients = length(name))
+choco_num_nutrients <- choco_nutrients %>% group_by(idx) %>% reframe(num_nutrients = length(name))
+popcorn_num_nutrients <- popcorn_nutrients %>% group_by(idx) %>% reframe(num_nutrients = length(name))
+candy_num_nutrients <- candy_nutrients %>% group_by(idx) %>% reframe(num_nutrients = length(name))
+chips_num_nutrients <- chips_nutrients %>% group_by(idx) %>% reframe(num_nutrients = length(name))
+cookies_num_nutrients <- cookies_nutrients %>% group_by(idx) %>% reframe(num_nutrients = length(name))
+test_num_nutrients <- test_nutrients %>% group_by(idx) %>% reframe(num_nutrients = length(name))
 ```
 
 ```{r}
@@ -148,7 +148,7 @@ plots_func_num_nutriens_by_cat <- function(x, title_name) {
 }
 ```
 
-```{r, eval = FALSE}
+```{r}
 plots_func_num_nutriens_by_cat(cakes_num_nutrients, "cakes_num_nutrients")
 plots_func_num_nutriens_by_cat(choco_num_nutrients, "choco_num_nutrients")
 plots_func_num_nutriens_by_cat(popcorn_num_nutrients, "popcorn_num_nutrients")
@@ -159,6 +159,7 @@ plots_func_num_nutriens_by_cat(test_num_nutrients, "test_num_nutrients")
 ```
 
 ```{r }
+```{r}
 # creating boxplots
 boxplot(cakes_num_nutrients$num_nutrients, choco_num_nutrients$num_nutrients, popcorn_num_nutrients$num_nutrients, candy_num_nutrients$num_nutrients, chips_num_nutrients$num_nutrients, cookies_num_nutrients$num_nutrients, test_num_nutrients$num_nutrients, main = "boxplot for num nutrients per category", names = c("cakes", "chocolate", "popcorn", "candy", "chips", "cookies", "test"))
 ```
@@ -177,21 +178,27 @@ nutrients_mean_amount_with_zero_amounts[is.na(nutrients_mean_amount_with_zero_am
 rownames(nutrients_mean_amount_with_zero_amounts) <- nutrients_mean_amount_with_zero_amounts[,1]
 #nutrients_mean_amount_with_zero_amounts <- nutrients_mean_amount_with_zero_amounts[,-1]
 ```
-
 ```{r}
-nuts_pivoted <- nutrients_mean_amount_with_zero_amounts %>% pivot_longer(!nutrient, names_to = "category", values_to = "mean_amount")
-ggplot(data = nuts_pivoted, mapping = aes(x = category, y = mean_amount)) +
-  geom_point() +
-  facet_wrap(. ~ nutrient, nrow = 1) +
+ggplot_nutrients <- function(pivoted_df, start, end) {
+  ggplot(data = pivoted_df[start:end,], mapping = aes(x = category, y = mean_amount, color = category)) + geom_point() +
+  facet_wrap(. ~ nutrient, scales = "free_y") +
   labs(title = "category vs. nutrient mean amount of each nutrient",
-       subtitle = "Faceted by nutrient",
-       x = "category", y ="mean_amount") 
-
-#ggsave("plot.png", plot, width = 10, height = 10, units = c("in"))
+       #subtitle = "Faceted by nutrient",
+       x = "category", y ="mean_amount") + 
+  theme(strip.text.x = element_text(size = 10, margin = margin()), axis.text.x.bottom = element_blank(), strip.text.y = element_text(size = 20, margin = margin()))
+}
 ```
 
 
 
+```{r}
+nuts_pivoted <- nutrients_mean_amount_with_zero_amounts %>% pivot_longer(!nutrient, names_to = "category", values_to = "mean_amount")
+ggplot_nutrients(nuts_pivoted, 1, 63)
+ggplot_nutrients(nuts_pivoted, 64, 126)
+ggplot_nutrients(nuts_pivoted, 127, 189)
+ggplot_nutrients(nuts_pivoted, 190, 252)
+ggplot_nutrients(nuts_pivoted, 253, 329)
+```
 
 
 ```{r}
